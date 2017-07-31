@@ -3,7 +3,7 @@
 #
 #   Author  :   qiwei
 #   E-mail  :   qqwei1123@163.com
-from wechat.template import *
+from ..tpl.template import *
 
 class WechatMsgRouter():
     

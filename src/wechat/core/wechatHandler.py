@@ -8,10 +8,10 @@ import hashlib
 from tornado.web import RequestHandler
 import xml.etree.ElementTree as ET
 import time
-from utils.logger_helper import logger
-from wechat.core.service import WeChatService
+import logging
+from .service import WeChatService
 
-class wechatEnter(RequestHandler):
+class WechatEnter(RequestHandler):
 
     def get(self):
         try:
@@ -19,16 +19,16 @@ class wechatEnter(RequestHandler):
             timestamp = self.get_argument('timestamp')
             nonce = self.get_argument('nonce')
             echostr = self.get_argument('echostr')
-            logger.debug('微信sign校验,signature=' + signature + ',&timestamp=' +
+            logging.debug('微信sign校验,signature=' + signature + ',&timestamp=' +
                          timestamp + '&nonce=' + nonce + '&echostr=' + echostr)
             result = self.check_signature(signature, timestamp, nonce)
             if result:
-                logger.debug('微信sign校验,返回echostr=' + echostr)
+                logging.debug('微信sign校验,返回echostr=' + echostr)
                 self.write(echostr)
             else:
-                logger.error('微信sign校验,---校验失败')
+                logging.error('微信sign校验,---校验失败')
         except Exception as e:
-            logger.error('微信sign校验,---Exception' + str(e))
+            logging.error('微信sign校验,---Exception' + str(e))
 
     def check_signature(self, signature, timestamp, nonce):
         """校验token是否正确"""
@@ -37,12 +37,12 @@ class wechatEnter(RequestHandler):
         L.sort()
         s = L[0] + L[1] + L[2]
         sha1 = hashlib.sha1(s.encode('utf-8')).hexdigest()
-        logger.debug('sha1=' + sha1 + '&signature=' + signature)
+        logging.debug('sha1=' + sha1 + '&signature=' + signature)
         return sha1 == signature
 
     def post(self):
         body = self.request.body
-        logger.debug('微信消息回复中心】收到用户消息' + str(body.decode('utf-8')))
+        logging.debug('微信消息回复中心】收到用户消息' + str(body.decode('utf-8')))
         data = ET.fromstring(body)
         service=WeChatService()
         out=service.process(data)

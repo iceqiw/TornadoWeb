@@ -9,8 +9,8 @@ import os
 import tornado.web
 import tornado.httpserver
 from tornado.options import define, options
-import controller.index as index
-import wechat.core.wechatHandler as wx
+from app import *
+from wechat import WechatEnter
 
 settings = {'cookie_secret': 'e440769943b4e8442f09de341f3fea28462d2341f483a0ed9a3d5d3859f==78d',
             'session_secret': "3cdcb1f07693b6e75ab50b466a40b9977db123440c28307f428b25e2231f1bcc",
@@ -19,16 +19,15 @@ settings = {'cookie_secret': 'e440769943b4e8442f09de341f3fea28462d2341f483a0ed9a
             }
  
 web_handlers = [
-        (r"/api/index", index.indexHandler),
-        (r"/api/wechat", wx.wechatEnter),
-        (r"/api/user/(\w+)",index.userHandler),
-        (r"/api", index.LoginHandler),
+        (r"/api/index", IndexHandler),
+        (r"/api/wechat", WechatEnter),
+        (r"/api/user/(\w+)",UserHandler),
+        (r"/api", IndexHandler),
         ]
 
 define("port", default=settings['port'], help="run on the given port", type=int)
 
 if __name__ == "__main__":
-
     app = tornado.web.Application(web_handlers, **settings)
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(app)
