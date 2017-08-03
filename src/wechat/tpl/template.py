@@ -26,7 +26,7 @@ class WechatReplyNewsA(WechatReplyNews):
         self._appid=appid
         self._openid=openid
         self.add_newsitem("test","teset","https://www.baidu.com/img/bd_logo1.png","https://www.baidu.com/")
-        self.add_newsitem("test","teset","","http://smartfutuer.xin/api?openid="+openid)
+        self.add_newsitem("test","teset","","http://106.14.188.143/api?openid="+openid)
 
 
 operator = {"default" : WechatReply, "text_b" : WechatReplyRepeat, "text_g" : WechatReplyNews, "text_o" :WechatReplyNewsA}

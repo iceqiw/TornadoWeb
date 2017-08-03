@@ -12,7 +12,14 @@ from core.model.core import db
 import logging
 
 class BaseHandler(RequestHandler):
+    _SESSION_COOKIE_KEY = "__SESSION__"
+    
     def prepare(self):
+        openid=self.get_secure_cookie(self._SESSION_COOKIE_KEY)
+        logging.info('{}！'.format(openid))
+        if openid is None:
+            logging.info(">>>>>>>>>>>>>>>>>>>>>>>> mo login")
+            self.redirect('/')
         db.connect()
         logging.info(">>>>>>>>>>>>>>>>>>>>>>>> db conn")
 
