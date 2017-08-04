@@ -5,4 +5,4 @@ from .model.core import BaseModel
 from .handler.webHandler import BaseHandler
 
 
-page_host='http://106.14.188.143/'
+page_host='http://localhost:8088/'
