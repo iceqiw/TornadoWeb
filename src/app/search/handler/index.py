@@ -12,6 +12,7 @@ import uuid
 from core import *
 import tornado.escape
 from ..service import queryService
+from config import page_host
 
 class IndexHandler(BaseHandler):
     def get(self):

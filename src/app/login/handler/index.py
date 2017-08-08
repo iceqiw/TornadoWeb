@@ -9,6 +9,7 @@ from tornado.web import RequestHandler
 import logging
 import os
 from core import *
+from config import page_host
 
 class LoginHandler(RequestHandler):
     _SESSION_COOKIE_KEY = "__SESSION__"
@@ -23,9 +24,10 @@ class LoginHandler(RequestHandler):
 
 
     def post(self):
-        openid = self.get_argument('openid')
+        username = self.get_argument('username')
+        pwd = self.get_argument('pwd')
         logging.info('{}！'.format(self.request.remote_ip))
-        self.set_secure_cookie(self._SESSION_COOKIE_KEY, openid,expires_days=1)
+        self.set_secure_cookie(self._SESSION_COOKIE_KEY, username,expires_days=1)
         self.redirect(page_host+'api/index')
 
 

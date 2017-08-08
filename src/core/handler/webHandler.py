@@ -8,7 +8,8 @@
 
 from tornado.web import RequestHandler
 import tornado.escape
-from core.model.core import db
+from ..model.core import db
+from config import page_host
 import logging
 
 class BaseHandler(RequestHandler):
@@ -19,10 +20,12 @@ class BaseHandler(RequestHandler):
         logging.info('{}！'.format(openid))
         if openid is None:
             logging.info(">>>>>>>>>>>>>>>>>>>>>>>> mo login")
-            self.redirect('/')
+            self.redirect(page_host)
         db.connect()
         logging.info(">>>>>>>>>>>>>>>>>>>>>>>> db conn")
 
     def on_finish(self):
-        db.close()
-        logging.info(">>>>>>>>>>>>>>>>>>>>>>>>>> db close")
+        logging.info(">>>>>>>>>>>>>>>>>>>>>>>>>> finish")
+        if not db.is_closed():
+            db.close()
+            logging.info(">>>>>>>>>>>>>>>>>>>>>>>>>> db close")
