@@ -7,23 +7,18 @@
 #   Desc    :   首页控制器
 
 from tornado.web import RequestHandler
-import tornado.escape
 from ..model.baseModel import db
 from config import logger
 
+
 class BaseHandler(RequestHandler):
-    _SESSION_COOKIE_KEY = "__SESSION__"
     def prepare(self):
-        openid=self.get_secure_cookie(self._SESSION_COOKIE_KEY)
-        logger.info('{}！'.format(openid))
-        if openid is None:
-            logger.info(">>>>>>>>>>>>>>>>>>>>>>>> mo login")
-            self.redirect(page_host)
+        logger.info(">>>>>>>>>>>>>>>>>>>>>>>> start")
         db.connect()
         logger.info(">>>>>>>>>>>>>>>>>>>>>>>> db conn")
 
     def on_finish(self):
-        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> finish")
         if not db.is_closed():
             db.close()
             logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> db close")
+        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> finish")

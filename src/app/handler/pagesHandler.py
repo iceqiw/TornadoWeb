@@ -12,25 +12,25 @@ from core import *
 from ..service import *
 
 
-class LoginHandler(RequestHandler):
+class LoginHandler(BaseHandler):
     def post(self):
+        logger.info(">>>>>>>>>>>>>>>>>>>>>>login")
         data = tornado.escape.json_decode(self.request.body)
-        pwd =data['password']
-        username =data['username']
-        doPass = queryService.isOk(username, pwd)
-        res={}
-        res['res']=doPass
+        pwd = data['password']
+        username = data['username']
+        res = {}
+        res['res'] = queryService.isOk(username, pwd)
         respon_json = tornado.escape.json_encode(res)
         self.write(respon_json)
 
 
-class IndexHandler(RequestHandler):
-    def get(self, topic,name):
+class IndexHandler(BaseHandler):
+    def get(self, topic, name):
         logger.info(topic)
         logger.info(name)
 
 
-class SearchHandler(RequestHandler):
+class SearchHandler(BaseHandler):
     def get(self, topic):
         logger.info(topic)
         alist = queryService.search(topic)
