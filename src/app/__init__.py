@@ -1,5 +1,3 @@
 #! /usr/bin/env python
 # coding: utf-8
-
-from .search import *
-from .login import *
+from .handler import *

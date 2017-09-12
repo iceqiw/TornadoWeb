@@ -8,24 +8,22 @@
 
 from tornado.web import RequestHandler
 import tornado.escape
-from ..model.core import db
-from config import page_host
-import logging
+from ..model.baseModel import db
+from config import logger
 
 class BaseHandler(RequestHandler):
     _SESSION_COOKIE_KEY = "__SESSION__"
-    
     def prepare(self):
         openid=self.get_secure_cookie(self._SESSION_COOKIE_KEY)
-        logging.info('{}！'.format(openid))
+        logger.info('{}！'.format(openid))
         if openid is None:
-            logging.info(">>>>>>>>>>>>>>>>>>>>>>>> mo login")
+            logger.info(">>>>>>>>>>>>>>>>>>>>>>>> mo login")
             self.redirect(page_host)
         db.connect()
-        logging.info(">>>>>>>>>>>>>>>>>>>>>>>> db conn")
+        logger.info(">>>>>>>>>>>>>>>>>>>>>>>> db conn")
 
     def on_finish(self):
-        logging.info(">>>>>>>>>>>>>>>>>>>>>>>>>> finish")
+        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> finish")
         if not db.is_closed():
             db.close()
-            logging.info(">>>>>>>>>>>>>>>>>>>>>>>>>> db close")
+            logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> db close")

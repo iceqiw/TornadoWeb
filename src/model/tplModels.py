@@ -10,11 +10,9 @@ from core import BaseModel
 from peewee import *
 import datetime
 
-class User(BaseModel):
-    username = CharField(unique=True)
-
-class Tweet(BaseModel):
-    user = ForeignKeyField(User, related_name='tweets')
+class Tpl(BaseModel):
+    tpl_key = CharField(unique=True)
+    tpl_type = CharField()
     message = TextField()
     created_date = DateTimeField(default=datetime.datetime.now)
-    is_published = BooleanField(default=True)
+

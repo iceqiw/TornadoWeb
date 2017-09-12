@@ -6,11 +6,11 @@
 #   Date    :   17/7/15 下午3:54
 #   Desc    :   首页控制器
 from app import *
-from wechat import WechatEnter
+from wechat.wechatHandler import WechatEnter
 
 web_handlers = [
-        (r"/api/index", IndexHandler),
-        (r"/api/user/(\w+)",UserHandler),
-        (r"/api",LoginHandler),
-        (r"/api/wechat", WechatEnter),
+        (r"/api/user/login",LoginHandler),
+        (r"/api/jxSearch/search/(.*)",SearchHandler),
+        (r"/api/jxSearch/a/(.*)/(.*)",IndexHandler),
+        (r"/wechat/g", WechatEnter),
         ]
