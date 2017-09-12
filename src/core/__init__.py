@@ -3,3 +3,4 @@
 
 from .model.baseModel import BaseModel
 from .handler.baseHandler import BaseHandler
+from .handler.baseHandler import UserHandler

@@ -18,21 +18,23 @@ class LoginHandler(BaseHandler):
         data = tornado.escape.json_decode(self.request.body)
         pwd = data['password']
         username = data['username']
-        res = {}
-        res['res'] = queryService.isOk(username, pwd)
-        respon_json = tornado.escape.json_encode(res)
-        self.write(respon_json)
+        res = queryService.isOk(username, pwd)
+        if res:
+            self.session = {
+                'name': username,
+                'ok': True,
+            }
+        self.write_success(res)
 
 
-class IndexHandler(BaseHandler):
+class IndexHandler(UserHandler):
     def get(self, topic, name):
         logger.info(topic)
         logger.info(name)
 
 
-class SearchHandler(BaseHandler):
+class SearchHandler(UserHandler):
     def get(self, topic):
         logger.info(topic)
         alist = queryService.search(topic)
-        respon_json = tornado.escape.json_encode(alist)
-        self.write(respon_json)
+        self.write_success(alist)
