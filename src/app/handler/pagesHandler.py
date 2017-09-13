@@ -32,6 +32,10 @@ class IndexHandler(UserHandler):
         logger.info(topic)
         logger.info(name)
 
+class SearchTrainHandler(BaseHandler):
+    def get(self,date,start,end,tf):
+        train=trainService.search(date,'FZS','XAY','T306')
+        self.write_success(train)
 
 class SearchHandler(UserHandler):
     def get(self, topic):

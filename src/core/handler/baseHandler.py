@@ -23,6 +23,7 @@ class BaseHandler(RequestHandler):
 
     def prepare(self):
         logger.info('BaseHandler {}'.format(self.get_user))
+        db.connect()
         if self.session:
             self.current_user = self.get_user
 
@@ -48,6 +49,7 @@ class BaseHandler(RequestHandler):
         self.clear_cookie(self._SESSION_COOKIE_KEY)
 
     def write_success(self, data=None):
+        self.set_header("Content-type","application/json;charset=utf-8")
         res={}
         res['data']=data
         res['success']=True
@@ -61,6 +63,10 @@ class BaseHandler(RequestHandler):
         self.write(extra)
         raise Finish  # 确保后面的代码不会执行
 
+    def on_finish(self):
+        if not db.is_closed():
+            db.close()
+            logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> db close")
 
 class UserHandler(BaseHandler):
     """
@@ -70,6 +76,7 @@ class UserHandler(BaseHandler):
         # 如果未登陆则跳到首页
         logger.info('UserHandler {}!'.format(self.get_user))
         if self.get_user:
+            db.connect()
             self.current_user = self.get_user
         else:
             self.send_error(400)
