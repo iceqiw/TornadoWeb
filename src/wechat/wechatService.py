@@ -31,15 +31,15 @@ def processEvent(openid,appid,event):
 def processMsg(openid,appid,msg):
     try:
        t=Tpl.get(Tpl.tpl_key ==msg)
-       return reply(openid,appid,t.message)
+       return replyok(openid,appid,t.message)
     except:
         t=Tpl.get(Tpl.tpl_key =='train')
         data=msg.split(',')
         train=trainService.search(data[0],data[1],data[2],data[3])
-        return reply(openid,appid,t.message,'|'.join(train.values()))
+        return replytrain(openid,appid,t.message,'|'.join(train.values()))
        
 
-def reply(openid,appid,tpl):
+def replyok(openid,appid,tpl):
     if not tpl.strip():
         return "null"
     CreateTime = int(time.time())
@@ -47,7 +47,7 @@ def reply(openid,appid,tpl):
     out = tpl % (openid, appid, CreateTime)
     return out
 
-def reply(openid,appid,tpl,msg):
+def replytrain(openid,appid,tpl,msg):
     if not tpl.strip():
         return "null"
     CreateTime = int(time.time())
