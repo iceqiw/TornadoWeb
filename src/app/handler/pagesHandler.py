@@ -34,8 +34,11 @@ class IndexHandler(UserHandler):
 
 class SearchTrainHandler(BaseHandler):
     def get(self,date,start,end,tf):
-        train=trainService.search(date,'FZS','XAY','T306')
-        self.write_success(train)
+        lista=[]
+        lista.append(trainService.search(date,start,end,tf))
+        lista.append(trainService.search(date,'FZS','XAY','T306'))
+        lista.append(trainService.search('2017-10-06','BJY','FZS','T308'))
+        self.write_success(lista)
 
 class SearchHandler(UserHandler):
     def get(self, topic):

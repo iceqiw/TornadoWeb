@@ -22,21 +22,26 @@ def search(date,start,end,tf):
     url=getUrl(date,start,end)
     http = urllib3.PoolManager()
     resp = http.request('GET', url,headers=hd)
-    return parseData(resp,tf)
+    return parseData(resp,tf,date)
     
-def parseData(resp,tf):
+def parseData(resp,tf,date):
     data = json.loads(resp.data)
     trains = data['data']['result']
     for train in trains:
         out=parseTrain(train)
         if tf==out['train']:
-           return out
+            out['date']=date
+            return out
 
 
 def parseTrain(train):
     line = train.split('|')
     res={}
     res['train']=line[3]
+    res['date']=line[13]
+    res['start_station']=line[6] #起点
+    res['end_station']=line[7] #终点
+    res['num_rw']=line[23] #软卧
     res['num_rw']=line[23] #软卧
     res['num_yw']=line[28] #硬卧
     res['num_yz']=line[29] #硬座
