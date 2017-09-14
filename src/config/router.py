@@ -8,6 +8,8 @@
 from app import *
 from wechat.wechatHandler import WechatEnter
 
+
+
 web_handlers = [
         (r"/api/user/login",LoginHandler),
         (r"/api/jxSearch/search/(.*)",SearchHandler),

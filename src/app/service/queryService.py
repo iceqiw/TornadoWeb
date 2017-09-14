@@ -6,7 +6,7 @@
 #   Date    :   17/7/15 下午3:54
 #   Desc    :   首页控制器
 
-from model.userModels import *
+from model.appModels import *
 from config import logger
 
 

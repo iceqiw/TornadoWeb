@@ -4,6 +4,8 @@
 #   Author  :   qiwei
 #   E-mail  :   qqwei1123@163.com
 from model.tplModels import *
+from model.appModels import *
+from app.service import trainService
 from config import logger
 import time
 
@@ -31,8 +33,11 @@ def processMsg(openid,appid,msg):
        t=Tpl.get(Tpl.tpl_key ==msg)
        return reply(openid,appid,t.message)
     except:
-        return "null"
-
+        t=Tpl.get(Tpl.tpl_key =='train')
+        data=msg.split(',')
+        train=trainService.search(data[0],data[1],data[2],data[3])
+        return reply(openid,appid,t.message,'|'.join(train.values()))
+       
 
 def reply(openid,appid,tpl):
     if not tpl.strip():
@@ -40,4 +45,12 @@ def reply(openid,appid,tpl):
     CreateTime = int(time.time())
     logger.info(tpl)
     out = tpl % (openid, appid, CreateTime)
+    return out
+
+def reply(openid,appid,tpl,msg):
+    if not tpl.strip():
+        return "null"
+    CreateTime = int(time.time())
+    logger.info(tpl)
+    out = tpl % (openid, appid, CreateTime,msg)
     return out

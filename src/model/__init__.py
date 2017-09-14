@@ -2,4 +2,4 @@
 # coding: utf-8
 
 from .tplModels import *
-from .userModels import *
+from .appModels import *
