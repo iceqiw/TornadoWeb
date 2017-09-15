@@ -41,6 +41,7 @@ def reply(openid, appid, tpl, msg):
 
 def getMsg(msg):
     try:
-        return Msg.get(Msg.key==msg).content
-    except Exception as err:    
+        return Msg.get(Msg.key == msg).content
+    except Exception as err:
+        logger.info(err)
         return msg
