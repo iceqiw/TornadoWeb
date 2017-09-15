@@ -43,4 +43,5 @@ def getMsg(msg):
     try:
         return Msg.get(Msg.key==msg).content
     except Exception as identifier:
+        logger.err(identifier)
         return msg
