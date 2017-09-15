@@ -9,48 +9,38 @@ from app.service import trainService
 from config import logger
 import time
 
+
 def parse(data):
     appid = data.find('ToUserName').text
-    openid= data.find('FromUserName').text
+    openid = data.find('FromUserName').text
     msgType = data.find('MsgType').text
-    if msgType=='event':
+    if msgType == 'event':
         event = data.find('Event').text
-        return processEvent(openid,appid,event)
+        return processMsg(openid, appid, event)
     else:
         msg = data.find('Content').text
-        return processMsg(openid,appid,msg)
+        return processMsg(openid, appid, msg)
 
-def processEvent(openid,appid,event):
+
+def processMsg(openid, appid, msg):
     try:
-        t=Tpl.get(Tpl.tpl_key ==event)
-        return reply(openid,appid,t.message)
-    except:
-        return "null"
-    
+        t = Tpl.get(Tpl.tpl_key == msg)
+    except Exception as err:
+        t = Tpl.get(Tpl.tpl_key == 'msg')
+    return reply(openid, appid, t.message, msg)
 
-def processMsg(openid,appid,msg):
-    try:
-       t=Tpl.get(Tpl.tpl_key ==msg)
-       return replyok(openid,appid,t.message)
-    except:
-        t=Tpl.get(Tpl.tpl_key =='train')
-        data=msg.split(',')
-        train=trainService.search(data[0],data[1],data[2],data[3])
-        return replytrain(openid,appid,t.message,'|'.join(train.values()))
-       
 
-def replyok(openid,appid,tpl):
+def reply(openid, appid, tpl, msg):
     if not tpl.strip():
-        return "null"
+        return None
+    real_msg = getMsg(msg)
     CreateTime = int(time.time())
-    logger.info(tpl)
-    out = tpl % (openid, appid, CreateTime)
+    out = tpl % (openid, appid, CreateTime, real_msg.content)
     return out
 
-def replytrain(openid,appid,tpl,msg):
-    if not tpl.strip():
-        return "null"
-    CreateTime = int(time.time())
-    logger.info(tpl)
-    out = tpl % (openid, appid, CreateTime,msg)
-    return out
+
+def getMsg(msg):
+    try:
+        return Msg.get(Msg.key==msg)
+    except Exception as identifier:
+        return msg

@@ -3,8 +3,9 @@
 
 # 1. 导入peewee的模块
 from peewee import MySQLDatabase,Model
+from playhouse.pool import PooledMySQLDatabase
 # 2. 建立数据库实例
-db = MySQLDatabase(
+db = PooledMySQLDatabase(
     database='test',
     host='localhost',
     port=3306,

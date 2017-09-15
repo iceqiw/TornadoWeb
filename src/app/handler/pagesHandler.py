@@ -33,11 +33,11 @@ class IndexHandler(UserHandler):
         logger.info(name)
 
 class SearchTrainHandler(BaseHandler):
-    def get(self,date,start,end,tf):
-        lista=[]
-        lista.append(trainService.search(date,start,end,tf))
-        lista.append(trainService.search(date,'FZS','XAY','T306'))
-        lista.append(trainService.search('2017-10-06','BJY','FZS','T308'))
+    def get(self):
+        lista=trainService.searchTrain()       
+        # lista.append(trainService.search(date,start,end,tf))
+        # lista.append(trainService.search(date,'FZS','XAY','T306'))
+        # lista.append(trainService.search('2017-10-06','BJY','FZS','T308'))
         self.write_success(lista)
 
 class SearchHandler(UserHandler):

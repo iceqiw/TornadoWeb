@@ -73,3 +73,9 @@ def saveTrain(trainNo, date, startStation, endStation, yz, yw, rw):
         yz=yz,
         yw=yw,
         rw=rw)
+
+def searchTrain():
+    listTrain=[]
+    for t in TrainSearch.select():
+        listTrain.append(search(t.date,t.startStation,t.endStation,t.trainNo))
+    return listTrain

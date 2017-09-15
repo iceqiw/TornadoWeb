@@ -40,3 +40,14 @@ class Train(BaseModel):
     date = CharField()
     startStation = CharField()
     endStation = CharField()
+
+class TrainSearch(BaseModel):
+    id = PrimaryKeyField()
+    trainNo = CharField()
+    date = CharField()
+    startStation = CharField()
+    endStation = CharField()
+
+class Msg(BaseModel):
+    key = CharField(unique=True)
+    content = CharField()

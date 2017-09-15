@@ -13,7 +13,7 @@ from wechat.wechatHandler import WechatEnter
 web_handlers = [
         (r"/api/user/login",LoginHandler),
         (r"/api/jxSearch/search/(.*)",SearchHandler),
-        (r"/api/train/search/(.*)/(.*)/(.*)/(.*)",SearchTrainHandler),
+        (r"/api/train/search",SearchTrainHandler),
         (r"/api/jxSearch/a/(.*)/(.*)",IndexHandler),
         (r"/wechat/g", WechatEnter),
         ]

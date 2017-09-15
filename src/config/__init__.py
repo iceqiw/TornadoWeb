@@ -10,4 +10,4 @@ logger = logging.getLogger("simpleExample")
 
 from core.model.baseModel import db
 from model.appModels import *
-db.create_tables([Train], safe=True)
+db.create_tables([Train,Msg,TrainSearch], safe=True)
