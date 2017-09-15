@@ -35,12 +35,12 @@ def reply(openid, appid, tpl, msg):
         return None
     real_msg = getMsg(msg)
     CreateTime = int(time.time())
-    out = tpl % (openid, appid, CreateTime, real_msg.content)
+    out = tpl % (openid, appid, CreateTime, real_msg)
     return out
 
 
 def getMsg(msg):
     try:
-        return Msg.get(Msg.key==msg)
+        return Msg.get(Msg.key==msg).content
     except Exception as identifier:
         return msg
