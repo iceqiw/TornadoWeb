@@ -38,10 +38,13 @@ def search(date, start, end, tf):
 def parseData(resp, tf, date):
     data = json.loads(resp.data)
     trains = data['data']['result']
+    stations = data['data']['map']
     for train in trains:
         out = parseTrain(train)
         if tf == out['train']:
             out['date'] = date
+            out['start_station']= stations[out['start_station']]
+            out['end_station']= stations[out['end_station']]
             return out
 
 
