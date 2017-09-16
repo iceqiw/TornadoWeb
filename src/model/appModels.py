@@ -20,7 +20,7 @@ class User(BaseModel):
 
 
 class Jx(BaseModel):
-    id = BigIntegerField()
+    id = CharField()
     itemtype = CharField()
     itemno = CharField()
     imglink = CharField()
@@ -31,23 +31,9 @@ class Jx(BaseModel):
     optionc = CharField()
     optiond = CharField()
 
-class Train(BaseModel):
-    id = PrimaryKeyField()
-    yz = CharField()
-    yw = CharField()
-    rw = CharField()
-    trainNo = CharField()
-    date = CharField()
-    startStation = CharField()
-    endStation = CharField()
-
 class TrainSearch(BaseModel):
     id = PrimaryKeyField()
     trainNo = CharField()
     date = CharField()
     startStation = CharField()
     endStation = CharField()
-
-class Msg(BaseModel):
-    key = CharField(unique=True)
-    content = CharField()

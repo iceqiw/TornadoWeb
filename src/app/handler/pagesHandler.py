@@ -15,9 +15,8 @@ from ..service import *
 class LoginHandler(BaseHandler):
     def post(self):
         logger.info(">>>>>>>>>>>>>>>>>>>>>>login")
-        data = tornado.escape.json_decode(self.request.body)
-        pwd = data['password']
-        username = data['username']
+        pwd = self.get_argument('password')
+        username = self.get_argument('username')
         res = queryService.isOk(username, pwd)
         if res:
             self.session = {
@@ -32,16 +31,36 @@ class IndexHandler(UserHandler):
         logger.info(topic)
         logger.info(name)
 
+
 class SearchTrainHandler(BaseHandler):
     def get(self):
-        lista=trainService.searchTrain()       
-        # lista.append(trainService.search(date,start,end,tf))
-        # lista.append(trainService.search(date,'FZS','XAY','T306'))
-        # lista.append(trainService.search('2017-10-06','BJY','FZS','T308'))
-        self.write_success(lista)
+        trains = trainService.searchTrain()
+        self.write_success(trains)
+
+
+class TrainHandler(BaseHandler):
+    def get(self):
+        params = trainService.findAllSearchTrain()
+        self.write_success(params)
+
+    def post(self):
+        data = tornado.escape.json_decode(self.request.body)
+        trainService.saveTrain(**data)
+        self.write_success()
+
+    def put(self):
+        data = tornado.escape.json_decode(self.request.body)
+        trainService.updateTrain(**data)
+        self.write_success()
+
+    def delete(self):
+        id = self.get_argument('id')
+        trainService.deleteTrain(id)
+        self.write_success()
+
 
 class SearchHandler(UserHandler):
     def get(self, topic):
         logger.info(topic)
-        alist = queryService.search(topic)
-        self.write_success(alist)
+        answerList = queryService.search(topic)
+        self.write_success(answerList)

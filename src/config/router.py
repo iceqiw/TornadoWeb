@@ -12,8 +12,9 @@ from wechat.wechatHandler import WechatEnter
 
 web_handlers = [
         (r"/api/user/login",LoginHandler),
+        (r"/api/index/(.*)/(.*)",IndexHandler),
         (r"/api/jxSearch/search/(.*)",SearchHandler),
         (r"/api/train/search",SearchTrainHandler),
-        (r"/api/jxSearch/a/(.*)/(.*)",IndexHandler),
+        (r"/api/train/curd",TrainHandler),
         (r"/wechat/g", WechatEnter),
         ]

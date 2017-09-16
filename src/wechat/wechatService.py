@@ -4,7 +4,6 @@
 #   Author  :   qiwei
 #   E-mail  :   qqwei1123@163.com
 from model.tplModels import *
-from model.appModels import *
 from app.service import trainService
 from config import logger
 import time

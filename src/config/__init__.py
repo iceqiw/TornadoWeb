@@ -10,4 +10,5 @@ logger = logging.getLogger("simpleExample")
 
 from core.model.baseModel import db
 from model.appModels import *
-db.create_tables([Train,Msg,TrainSearch], safe=True)
+from model.tplModels import *
+db.create_tables([Msg,TrainSearch], safe=True)

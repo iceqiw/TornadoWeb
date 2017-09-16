@@ -22,8 +22,9 @@ class BaseHandler(RequestHandler):
     _SESSION_COOKIE_KEY = "__SESSION__"
 
     def prepare(self):
-        logger.info('BaseHandler {}'.format(self.get_user))
-        db.connect()
+        if db.is_closed():
+            db.connect()
+            logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>> db open')
         if self.session:
             self.current_user = self.get_user
 
@@ -48,19 +49,12 @@ class BaseHandler(RequestHandler):
     def session(self):
         self.clear_cookie(self._SESSION_COOKIE_KEY)
 
-    def write_success(self, data=None):
+    def write_success(self, data="success"):
         self.set_header("Content-type","application/json;charset=utf-8")
         res={}
         res['data']=data
-        res['success']=True
         res['code']=200
         self.write(tornado.escape.json_encode(res))
-        raise Finish  # 确保后面的代码不会执行
-
-    def write_fail(self, **extra):
-        """ 抛出结束异常来确保代码不会继续执行 """
-        extra.update({"success": False})
-        self.write(extra)
         raise Finish  # 确保后面的代码不会执行
 
     def on_finish(self):
@@ -74,9 +68,11 @@ class UserHandler(BaseHandler):
     """
     def prepare(self):
         # 如果未登陆则跳到首页
-        logger.info('UserHandler {}!'.format(self.get_user))
-        if self.get_user:
+        if db.is_closed():
             db.connect()
+            logger.info('>>>>>>>>>>>>>>>>>>>>>>>>>> db open')
+        if self.get_user:
             self.current_user = self.get_user
         else:
             self.send_error(400)
+            raise Finish

@@ -16,3 +16,6 @@ class Tpl(BaseModel):
     message = TextField()
     created_date = DateTimeField(default=datetime.datetime.now)
 
+class Msg(BaseModel):
+    key = CharField(unique=True)
+    content = CharField()

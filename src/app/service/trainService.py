@@ -42,7 +42,6 @@ def parseData(resp, tf, date):
         out = parseTrain(train)
         if tf == out['train']:
             out['date'] = date
-            saveTrain(out['train'],out['date'],out['start_station'],out['end_station'],out['num_yz'],out['num_yw'],out['num_rw'])
             return out
 
 
@@ -64,18 +63,28 @@ def parseTrain(train):
     return res
 
 
-def saveTrain(trainNo, date, startStation, endStation, yz, yw, rw):
-    Train.create(
+def saveTrain(trainNo, date, startStation, endStation):
+    TrainSearch.create(
         trainNo=trainNo,
         date=date,
         startStation=startStation,
-        endStation=endStation,
-        yz=yz,
-        yw=yw,
-        rw=rw)
+        endStation=endStation)
+
+def updateTrain(id,trainNo, date, startStation, endStation):
+    TrainSearch.update(
+        trainNo=trainNo,
+        date=date,
+        startStation=startStation,
+        endStation=endStation).where(TrainSearch.id == id).execute()
+        
+def deleteTrain(id):
+    TrainSearch.delete().where(TrainSearch.id == id).execute()
 
 def searchTrain():
     listTrain=[]
     for t in TrainSearch.select():
         listTrain.append(search(t.date,t.startStation,t.endStation,t.trainNo))
     return listTrain
+
+def findAllSearchTrain():
+    return [t for t in TrainSearch.select().dicts()]
