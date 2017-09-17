@@ -60,9 +60,6 @@ def parseTrain(train):
     res['num_yz'] = line[29]  #硬座
     res['num_wz'] = line[26]  #无座
 
-    res['num_2d'] = line[30]  #二等
-    res['num_1d'] = line[31]  #一等
-    res['num_sw'] = line[32]  #商务
     return res
 
 
