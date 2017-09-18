@@ -40,7 +40,11 @@ class SearchTrainHandler(BaseHandler):
 
 class TrainHandler(BaseHandler):
     def get(self):
-        params = trainService.findAllSearchTrain()
+        id = self.get_argument('id')
+        if id:
+            params = trainService.getByid(id)
+        else :
+            params = trainService.findAllSearchTrain()
         self.write_success(params)
 
     def post(self):

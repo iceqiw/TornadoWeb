@@ -28,11 +28,13 @@ def getUrl(date, start, end):
     return url
 
 
-def search(date, start, end, tf):
+def search(id,date, start, end, tf):
     url = getUrl(date, start, end)
     http = urllib3.PoolManager()
     resp = http.request('GET', url, headers=hd)
-    return parseData(resp, tf, date)
+    out= parseData(resp, tf, date)
+    out['id']=id
+    return out
 
 
 def parseData(resp, tf, date):
@@ -83,8 +85,13 @@ def deleteTrain(id):
 def searchTrain():
     listTrain=[]
     for t in TrainSearch.select():
-        listTrain.append(search(t.date,t.startStation,t.endStation,t.trainNo))
+        listTrain.append(search(t.id,t.date,t.startStation,t.endStation,t.trainNo))
     return listTrain
 
 def findAllSearchTrain():
     return [t for t in TrainSearch.select().dicts()]
+
+def getByid(id):
+    if id=='0' :
+        return ''
+    return TrainSearch.select().where(TrainSearch.id == id).dicts()[0]
