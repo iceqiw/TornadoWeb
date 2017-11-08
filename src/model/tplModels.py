@@ -18,4 +18,5 @@ class Tpl(BaseModel):
 
 class Msg(BaseModel):
     keyword = CharField(unique=True)
+    tplKey = CharField(db_column='tpl_key')
     content = CharField()
