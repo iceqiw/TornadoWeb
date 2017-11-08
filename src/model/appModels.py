@@ -11,29 +11,10 @@ from peewee import *
 import datetime
 
 
-class User(BaseModel):
+class train_search(BaseModel):
     id = PrimaryKeyField()
-    username = CharField(unique=True)
-    password = CharField()
-    status = BooleanField()
-    name = CharField()
-
-
-class Jx(BaseModel):
-    id = CharField()
-    itemtype = CharField()
-    itemno = CharField()
-    imglink = CharField()
-    answer = CharField()
-    question = CharField()
-    optiona = CharField()
-    optionb = CharField()
-    optionc = CharField()
-    optiond = CharField()
-
-class TrainSearch(BaseModel):
-    id = PrimaryKeyField()
-    trainNo = CharField()
+    trainNo = CharField(db_column='train_no' )
     date = CharField()
-    startStation = CharField()
-    endStation = CharField()
+    startStation = CharField(db_column='start_station')
+    endStation = CharField(db_column='end_station')
+
