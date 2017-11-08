@@ -11,4 +11,8 @@ web_handlers = [
         (r"/api/p/trainSearch/add",TrainSearchHandler),
         (r"/api/p/trainSearch/edit",TrainSearchHandler),
         (r"/api/p/trainSearch/page",TrainSearchHandler),
+        (r"/api/p/msg/del/(.*)",WechatMsgHandler),
+        (r"/api/p/msg/add",WechatMsgHandler),
+        (r"/api/p/msg/edit",WechatMsgHandler),
+        (r"/api/p/msg/page",WechatMsgHandler),
         ]
