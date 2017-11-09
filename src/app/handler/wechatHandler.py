@@ -29,3 +29,26 @@ class WechatMsgHandler(BaseHandler):
     def delete(self,id):
         wechatService.delete(id)
         self.write_success()
+
+class WechatTplHandler(BaseHandler):
+    def get(self):
+        try:
+            params = wechatTplService.findAll()
+        except Exception as err:
+            logger.info(err)
+        
+        self.write_successList(params)
+
+    def post(self):
+        data = tornado.escape.json_decode(self.request.body)
+        wechatTplService.save(**data)
+        self.write_success()
+
+    def put(self):
+        data = tornado.escape.json_decode(self.request.body)
+        wechatTplService.update(**data)
+        self.write_success()
+
+    def delete(self,id):
+        wechatTplService.delete(id)
+        self.write_success()

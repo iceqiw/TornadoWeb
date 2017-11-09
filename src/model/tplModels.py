@@ -11,8 +11,7 @@ from peewee import *
 import datetime
 
 class Tpl(BaseModel):
-    tpl_key = CharField(unique=True)
-    tpl_type = CharField()
+    tplKey = CharField(db_column='tpl_key',unique=True)
     message = TextField()
     created_date = DateTimeField(default=datetime.datetime.now)
 

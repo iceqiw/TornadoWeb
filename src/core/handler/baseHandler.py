@@ -11,8 +11,14 @@ import tornado.escape
 from ..model.baseModel import db
 from config import logger
 import json
+from datetime import datetime 
 
-
+class DateEncoder(json.JSONEncoder ):  
+    def default(self, obj):  
+        if isinstance(obj, datetime):  
+            return obj.__str__()  
+        return json.JSONEncoder.default(self, obj)  
+  
 class BaseHandler(RequestHandler):
     def prepare(self):
         if db.is_closed():
@@ -29,7 +35,11 @@ class BaseHandler(RequestHandler):
 
     def write_successList(self, data=[]):
         self.set_header("Content-type", "application/json;charset=utf-8")
-        self.write(tornado.escape.json_encode(data))
+        try:
+            self.write(json.dumps(data, cls=DateEncoder)  )
+        except Exception as err:
+            logger.info(err)
+        
         raise Finish  # 确保后面的代码不会执行
 
     def on_finish(self):
