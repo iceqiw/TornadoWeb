@@ -13,7 +13,7 @@ import datetime
 class Tpl(BaseModel):
     tplKey = CharField(db_column='tpl_key',unique=True)
     message = TextField()
-    created_date = DateTimeField(default=datetime.datetime.now)
+    createdDate = DateTimeField(db_column='created_date',default=datetime.datetime.now)
 
 class Msg(BaseModel):
     keyword = CharField(unique=True)

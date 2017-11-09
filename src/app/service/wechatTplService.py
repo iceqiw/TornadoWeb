@@ -9,7 +9,7 @@ def save( message, tplKey):
     Tpl.create(tplKey=tplKey, message=message)
 
 
-def update(id, message, tplKey):
+def update(id, message, tplKey,createdDate):
     Tpl.update(
         tplKey=tplKey,
         message=message).where(Tpl.id == id).execute()

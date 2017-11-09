@@ -3,3 +3,5 @@
 
 from .tplModels import *
 from .appModels import *
+# from core.model.baseModel import db
+# db.create_tables([train_search, Msg,Tpl])

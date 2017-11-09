@@ -7,7 +7,6 @@
 #   Desc    :   首页控制器
 
 from tornado.web import RequestHandler, Finish
-import tornado.escape
 from ..model.baseModel import db
 from config import logger
 import json
@@ -30,13 +29,13 @@ class BaseHandler(RequestHandler):
         res = {}
         res['data'] = data
         res['code'] = 200
-        self.write(tornado.escape.json_encode(res))
+        self.write(json.dumps(data, cls=DateEncoder))
         raise Finish  # 确保后面的代码不会执行
 
     def write_successList(self, data=[]):
         self.set_header("Content-type", "application/json;charset=utf-8")
         try:
-            self.write(json.dumps(data, cls=DateEncoder)  )
+            self.write(json.dumps(data, cls=DateEncoder))
         except Exception as err:
             logger.info(err)
         
@@ -46,3 +45,5 @@ class BaseHandler(RequestHandler):
         if not db.is_closed():
             db.close()
             logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> db close")
+
+
